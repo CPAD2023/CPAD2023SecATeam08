@@ -15,6 +15,7 @@ const DressItem = ({ item }) => {
     dispatch(addToCart(item)); // cart
     dispatch(incrementQty(item)); // product
   };
+
   return (
     <View>
       <Pressable

@@ -1,60 +1,104 @@
-import { StyleSheet, Text, View,SafeAreaView,Pressable,TextInput, Image } from 'react-native'
-import React, { useState } from 'react'
-import { auth } from '../firebase'
-import { signOut } from 'firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Pressable,
+  TextInput,
+  Image,
+  SectionList,
+  FlatList,
+  // FlatList,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
+import { signOut } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
+import { doc, getDoc } from "firebase/firestore";
+
+// New OrderItem component
+const OrderItem = ({ order }) => (
+  <View style={styles.orderItemContainer}>
+    <Image source={{ uri: order.image }} style={styles.orderItemImage} />
+    <Text style={styles.orderItemText}>{order.name}</Text>
+    <Text style={styles.orderItemText}>Price: ${order.price}</Text>
+    <Text style={styles.orderItemText}>Quantity: {order.quantity}</Text>
+    <Text style={styles.orderItemText}>
+      Total: ${order.price * order.quantity}
+    </Text>
+  </View>
+);
 
 const ProfileScreen = () => {
-    const user = auth.currentUser;
-    const navigation = useNavigation();
-    // const [newEmail, setNewEmail] = useState('');
-    // const [newPhoneNumber, setNewPhoneNumber] = useState('');
-    const signOutUser = () => {
-        signOut(auth).then(() => {
-            navigation.replace("Login");
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-    const navigateToHome = () => {
-      navigation.navigate("Home");
+  const user = auth.currentUser;
+  const navigation = useNavigation();
+  const [orders, setOrders] = useState([]);
+
+  async function fetchOrders() {
+    const userUid = auth.currentUser.uid;
+    const ref = doc(db, "users", `${userUid}`);
+    const user = await getDoc(ref);
+    const orders = user.data().orders;
+    setOrders(orders);
   }
-    // const updateProfile = () => {
-    //     if (newEmail) {
-    //       user
-    //         .updateEmail(newEmail)
-    //         .then(() => {
-    //           console.log('Email updated successfully');
-    //           // You may want to clear the input field or perform other actions here.
-    //         })
-    //         .catch((error) => {
-    //           console.log('Error updating email:', error);
-    //         });
-    //     }
-    
-    //     if (newPhoneNumber) {
-    //         user
-    //           .updatePhoneNumber(newPhoneNumber)
-    //           .then(() => {
-    //             console.log('Phone number updated successfully');
-    //             // You may want to clear the input field or perform other actions here.
-    //           })
-    //           .catch((error) => {
-    //             console.log('Error updating phone number:', error);
-    //           });
-    //       }
-    //     };
+  // const [newEmail, setNewEmail] = useState('');
+  // const [newPhoneNumber, setNewPhoneNumber] = useState('');
+  useEffect(function () {
+    fetchOrders();
+  }, []);
+
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => {
+        navigation.replace("Login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const navigateToHome = () => {
+    navigation.navigate("Home");
+  };
+  // const updateProfile = () => {
+  //     if (newEmail) {
+  //       user
+  //         .updateEmail(newEmail)
+  //         .then(() => {
+  //           console.log('Email updated successfully');
+  //           // You may want to clear the input field or perform other actions here.
+  //         })
+  //         .catch((error) => {
+  //           console.log('Error updating email:', error);
+  //         });
+  //     }
+
+  //     if (newPhoneNumber) {
+  //         user
+  //           .updatePhoneNumber(newPhoneNumber)
+  //           .then(() => {
+  //             console.log('Phone number updated successfully');
+  //             // You may want to clear the input field or perform other actions here.
+  //           })
+  //           .catch((error) => {
+  //             console.log('Error updating phone number:', error);
+  //           });
+  //       }
+  //     };
   return (
-    <SafeAreaView style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+    <SafeAreaView
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+    >
       <Pressable onPress={navigateToHome}>
-      <View style={styles.profilePictureContainer}>
-                <Image 
-                    source={{ uri: "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg" }}
-                    style={styles.circularProfilePicture}
-                />
-            </View>
-            </Pressable>
-      <Pressable style={{marginVertical:10}}>
+        <View style={styles.profilePictureContainer}>
+          <Image
+            source={{
+              uri: "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg",
+            }}
+            style={styles.circularProfilePicture}
+          />
+        </View>
+      </Pressable>
+      <Pressable style={{ marginVertical: 10 }}>
         <Text>welcome {user.email}</Text>
       </Pressable>
       {/* <TextInput
@@ -72,35 +116,62 @@ const ProfileScreen = () => {
       <Pressable onPress={updateProfile} style={styles.button}>
         <Text>Update Profile</Text>
       </Pressable> */}
-      <Pressable onPress={signOutUser}>
-          <Text>Sign Out</Text>
+      <Pressable onPress={navigateToHome}>
+        <Text>🏡</Text>
       </Pressable>
-    </SafeAreaView>
-  )
-}
 
-export default ProfileScreen
+      <Pressable onPress={signOutUser}>
+        <Text>Sign Out</Text>
+      </Pressable>
+
+      <FlatList
+        data={orders}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <OrderItem order={item} />}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 10,
-        margin: 10,
-      },
-      button: {
-        backgroundColor: '#088F8F',
-        padding: 10,
-        margin: 10,
-        borderRadius: 7,
-        alignItems: 'center',
-      },
-      profilePictureContainer: {
-        alignItems: "center",
-    },
-    circularProfilePicture: {
-        width: 100,
-        height: 100,
-        borderRadius: 50, // Make it a circle
-    },
-})
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    margin: 10,
+  },
+  button: {
+    backgroundColor: "#088F8F",
+    padding: 10,
+    margin: 10,
+    borderRadius: 7,
+    alignItems: "center",
+  },
+  profilePictureContainer: {
+    alignItems: "center",
+  },
+  circularProfilePicture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50, // Make it a circle
+  },
+  orderItemContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    margin: 10,
+    borderRadius: 7,
+  },
+  orderItemImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  orderItemText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+});

@@ -1,11 +1,21 @@
-import { StyleSheet, Text, View, SafeAreaView, TextInput ,ScrollView, Pressable, Alert} from 'react-native'
-import React, { useState } from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+  ScrollView,
+  Pressable,
+  Alert,
+} from "react-native";
+import React, { useState } from "react";
 import HorizontalDatepicker from "@awrminkhodaei/react-native-horizontal-datepicker";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const PickUpScreen = () => {
-    const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const cart = useSelector((state) => state.cart.cart);
   const total = cart
     .map((item) => item.quantity * item.price)
@@ -36,64 +46,83 @@ const PickUpScreen = () => {
     },
   ];
 
-    const times = [
-        {
-          id: "0",
-          time: "11:00 PM",
-        },
-        {
-          id: "1",
-          time: "12:00 PM",
-        },
-        {
-          id: "2",
-          time: "1:00 PM",
-        },
-        {
-          id: "2",
-          time: "2:00 PM",
-        },
-        {
-          id: "4",
-          time: "3:00 PM",
-        },
-        {
-          id: "5",
-          time: "4:00 PM",
-        },
-      ];
-      const navigation = useNavigation();
+  const times = [
+    {
+      id: "0",
+      time: "11:00 PM",
+    },
+    {
+      id: "1",
+      time: "12:00 PM",
+    },
+    {
+      id: "2",
+      time: "1:00 PM",
+    },
+    {
+      id: "3",
+      time: "2:00 PM",
+    },
+    {
+      id: "4",
+      time: "3:00 PM",
+    },
+    {
+      id: "5",
+      time: "4:00 PM",
+    },
+  ];
+  const navigation = useNavigation();
   const proceedToCart = () => {
-      if(!selectedDate || !selectedTime || !delivery || !address){
-        Alert.alert(
-            "Empty or invalid",
-            "Please select all the fields",
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-              },
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false }
-          );
-      }
-      if(selectedDate && selectedTime && delivery && address){
-        navigation.replace("Cart",{
-            pickUpDate:selectedDate,
-            selectedTime:selectedTime,
-            no_Of_days:delivery,
-            address: address,
-        })
-      }
-  }
+    if (!selectedDate || !selectedTime || !delivery || !address) {
+      Alert.alert(
+        "Empty or invalid",
+        "Please select all the fields",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ],
+        { cancelable: false }
+      );
+    }
+    if (selectedDate && selectedTime && delivery && address) {
+      navigation.replace("Cart", {
+        pickUpDate: selectedDate,
+        selectedTime: selectedTime,
+        no_Of_days: delivery,
+        address: address,
+      });
+    }
+  };
   return (
     <>
-    <SafeAreaView>
-        <Text style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}>
-          enter Address
-        </Text>
+      <SafeAreaView>
+        <View
+          style={{
+            padding: 10,
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Pressable onPress={() => navigation.goBack()}>
+            <Ionicons
+              onPress={() => navigation.goBack()}
+              name="arrow-back"
+              size={24}
+              color="black"
+            />
+          </Pressable>
+          <Text
+            style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}
+          >
+            Enter Address
+          </Text>
+        </View>
+
         <TextInput
           style={{
             padding: 40,
@@ -189,11 +218,11 @@ const PickUpScreen = () => {
           ))}
         </ScrollView>
       </SafeAreaView>
-     {total === 0 ? null : (
+      {total === 0 ? null : (
         <Pressable
           style={{
             backgroundColor: "#088F8F",
-            marginTop:"auto",
+            marginTop: "auto",
             padding: 10,
             marginBottom: 40,
             margin: 15,
@@ -230,6 +259,6 @@ const PickUpScreen = () => {
   );
 };
 
-export default PickUpScreen
+export default PickUpScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
