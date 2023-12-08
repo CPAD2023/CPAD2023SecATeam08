@@ -1,6 +1,6 @@
 # CPAD2023SecATeam08
-Sriani Chakroborty(2022SP93013)
-Bhumika Bhandari(2022SP93052)
+Srijani Chakroborty(2022SP93013)\
+Bhumika Bhandari(2022SP93052)\
 Supriya Jagtap(2022SP93053)
 
 # Laundry App
