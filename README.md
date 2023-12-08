@@ -1,4 +1,8 @@
 # CPAD2023SecATeam08
+Sriani Chakroborty(2022SP93013)
+Bhumika Bhandari(2022SP93052)
+Supriya Jagtap(2022SP93053)
+
 # Laundry App
 
 Our laundry app is itself an unique app as in the market it has very less competitors with limited features. 
