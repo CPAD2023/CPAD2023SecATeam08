@@ -1,14 +1,51 @@
-import { StyleSheet, Text, View,SafeAreaView,Pressable,TextInput, Image } from 'react-native'
-import React, { useState } from 'react'
-import { auth } from '../firebase'
+import { StyleSheet, Text, View,SafeAreaView,Pressable,TextInput, Image, FlatList } from 'react-native'
+import React, {useEffect, useState } from 'react'
+import { auth, db } from '../firebase'
 import { signOut } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import { doc, getDoc } from "firebase/firestore";
+
+// New OrderItem component
+const OrderItem = ({ order }) => (
+  <View style={styles.orderItemContainer}>
+    <View style={styles.orderItemContent}>
+    <Image source={{ uri: order.image }} style={styles.orderItemImage} />
+    <View style={styles.orderItemTextContainer}>
+    <Text style={styles.orderItemText}>{order.name}</Text>
+    <Text style={styles.orderItemText}>Price: ${order.price}</Text>
+    <Text style={styles.orderItemText}>Quantity: {order.quantity}</Text>
+    <Text style={styles.orderItemText}>
+      Total: ${order.price * order.quantity}
+    </Text>
+    </View>
+    </View>
+  </View>
+);
 
 const ProfileScreen = () => {
     const user = auth.currentUser;
     const navigation = useNavigation();
+    const [orders, setOrders] = useState([]);
+
+     async function fetchOrders() {
+      try {
+        const userUid = auth.currentUser.uid;
+        const ref = doc(db, "users", `${userUid}`);
+        const user = await getDoc(ref);
+        const orders = user.data().orders;
+        console.log("Fetched Orders:", orders);
+        setOrders(orders);
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    }
     // const [newEmail, setNewEmail] = useState('');
     // const [newPhoneNumber, setNewPhoneNumber] = useState('');
+
+    useEffect(function () {
+      fetchOrders();
+    }, []);
+    
     const signOutUser = () => {
         signOut(auth).then(() => {
             navigation.replace("Login");
@@ -72,9 +109,32 @@ const ProfileScreen = () => {
       <Pressable onPress={updateProfile} style={styles.button}>
         <Text>Update Profile</Text>
       </Pressable> */}
+
+      <Pressable onPress={navigateToHome}>
+        <Text style={{ fontSize: 25 }}>🏡</Text>
+      </Pressable>
+    
       <Pressable onPress={signOutUser}>
           <Text>Sign Out</Text>
       </Pressable>
+       <Text
+        style={{
+          fontSize: 16,
+          fontWeight: "500",
+          marginBottom: 7,
+          marginTop: 14,
+          paddingRight: 200,
+        }}
+      >
+        Order Details
+      </Text>
+
+      <FlatList
+        style={styles.orderItem}
+        data={orders}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <OrderItem order={item} />}
+      />
     </SafeAreaView>
   )
 }
@@ -103,4 +163,31 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 50, // Make it a circle
     },
+    orderItemContainer: {
+      borderWidth: 1,
+      borderColor: "#ccc",
+      paddingLeft: 100,
+      paddingRight: 100,
+      margin: 10,
+      borderRadius: 7,
+    },
+    orderItemContent: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    orderItemImage: {
+      width: 100,
+      height: 100,
+      borderRadius: 5,
+      marginBottom: 10,
+      marginTop: 10,
+    },
+    orderItemTextContainer: {
+      marginLeft: 10,
+    },
+    orderItemText: {
+      fontSize: 16,
+      marginBottom: 5,
+    },
+    orderItem: {},
 })
