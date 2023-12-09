@@ -14,24 +14,24 @@ const ServiceDetailScreen = ({ route }) => {
     image: "https://res.cloudinary.com/dysq7pufd/image/upload/v1701364851/serviceDetail/laundry-service-room-vector-illustration-washing-and-drying-machines-with-cleansers-on-shelf_tptapf.jpg",
 
       description: 'This service includes washing clothes. We use state-of-the-art machines to ensure your clothes are cleaned with care. Our experienced staff meticulously handles your garments, ensuring they look as good as new. We also offer eco-friendly detergents and a variety of washing options, from delicate to heavy-duty loads.',
-      price: '$10',
+      price: 'INR10',
     },
     Laundry: {
     image: "https://res.cloudinary.com/dysq7pufd/image/upload/v1701364881/serviceDetail/shutterstock_1179456106_rhgjpm.jpg",
 
       description: 'Our laundry service is quick and efficient. We offer a 24-hour turnaround time for your convenience. Price: $15 per load. This is some additional content for the description. You can add more and it will become scrollable if it exceeds the screen height.',
-      price: '$15',
+      price: 'INR15',
     },
     'Wash & Iron': {
     image: "https://res.cloudinary.com/dysq7pufd/image/upload/v1701364904/serviceDetail/washing-ironing-linen-clothes_gryjo8.jpg",
 
       description: 'We wash and iron your clothes with precision. We take special care of delicate fabrics. Price: $20 per load. This is some additional content for the description. You can add more and it will become scrollable if it exceeds the screen height.',
-      price: '$20',
+      price: 'INR20',
     },
     Cleaning: {
     image: "https://res.cloudinary.com/dysq7pufd/image/upload/v1701364928/serviceDetail/99612207_qgppwt.jpg",
       description: 'We provide professional cleaning services. Our team is highly skilled in deep cleaning and maintaining a fresh and hygienic environment. Price: $30 per hour. This is some additional content for the description. You can add more and it will become scrollable if it exceeds the screen height.',
-      price: '$30',
+      price: 'INR30',
     },
   };
 
