@@ -20,12 +20,12 @@ https://drive.google.com/file/d/1i01GPOArrJEDEqJU5fQha68YpNC1ro8T/view?usp=shari
 ![CPAD Architechture](https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/bb5b21a1-cf68-463b-bbc5-23fc5dbd8515)
 
 # App screenshots
-<img width="348" height="700" align="center" alt="Screenshot 2023-12-04 at 4 11 32 PM" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/b9ecbb9e-a9b1-484b-a6ef-fea291f509b1">
-<img width="346" alt="Picture 1" align="center" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/c7c03e88-0dc9-463a-bf60-4db1c693bf9f">
-<img width="305" height="700" align="center" alt="Picture 2" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/f1d2bbde-c921-4b6b-b980-f8a12eaa5677">
+<img width="348" alt="Screenshot 2023-12-04 at 4 11 32 PM" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/b9ecbb9e-a9b1-484b-a6ef-fea291f509b1">
+<img width="346" alt="Picture 1" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/c7c03e88-0dc9-463a-bf60-4db1c693bf9f">
+<img width="346" alt="Picture 2" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/f1d2bbde-c921-4b6b-b980-f8a12eaa5677">
 <img width="353" alt="Picture 3" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/376514ee-18a2-45d6-bdff-73dcb46d3a16">
 <img width="348" alt="Picture 4" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/4419b7a4-8b73-4b23-940f-58b557de5b40">
-<img width="300" height="700" alt="Picture 5" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/519cf964-9d63-41f8-884b-21ffa997fd30">
+<img width="346" alt="Picture 5" src="https://github.com/CPAD2023/CPAD2023SecATeam08/assets/128456915/519cf964-9d63-41f8-884b-21ffa997fd30">
 
 # Features
 1. Centralised login and registration with proper validation.
