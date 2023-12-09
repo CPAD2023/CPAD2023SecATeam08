@@ -65,27 +65,41 @@ const PickUpScreen = () => {
       ];
       const navigation = useNavigation();
   const proceedToCart = () => {
-      if(!selectedDate || !selectedTime || !delivery || !address){
-        Alert.alert(
-            "Empty or invalid",
-            "Please select all the fields",
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel"
-              },
-              { text: "OK", onPress: () => console.log("OK Pressed") }
-            ],
-            { cancelable: false }
-          );
+       if (!selectedDate || !selectedTime || !delivery || !address) {
+      let errorMessage = "Please select all the fields:\n";
+  
+      if (!selectedDate) {
+        errorMessage += "- Pick Up Date\n";
       }
+  
+      if (!selectedTime) {
+        errorMessage += "- Select Time\n";
+      }
+  
+      if (!delivery) {
+        errorMessage += "- Delivery Date\n";
+      }
+  
+      if (!address) {
+        errorMessage += "- Address\n";
+      }
+  
+      Alert.alert("Empty or invalid", errorMessage, [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed"),
+        },
+      ]);
+  
+      return;
+    }
       if(selectedDate && selectedTime && delivery && address){
         navigation.replace("Cart",{
             pickUpDate:selectedDate,
             selectedTime:selectedTime,
             no_Of_days:delivery,
             address: address,
+            specialInstructions: specialInstructions,
         })
       }
   }
