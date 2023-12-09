@@ -16,7 +16,7 @@ import {
     incrementQuantity,
   } from "../CartReducer";
   import { decrementQty, incrementQty } from "../ProductReducer";
-  import { doc, setDoc } from "firebase/firestore";
+  import { doc, getDoc, setDoc } from "firebase/firestore";
   import { auth, db } from "../firebase";
 
 const CartScreen = () => {
@@ -31,10 +31,15 @@ const CartScreen = () => {
   const placeOrder = async () => {
     navigation.navigate("Order");
     dispatch(cleanCart());
+    const userUid = auth.currentUser.uid;
+    const ref = doc(db, "users", `${userUid}`);
+    const user = await getDoc(ref);
+    const orders = user.data().orders;
+
     await setDoc(
       doc(db, "users", `${userUid}`),
       {
-        orders: { ...cart },
+        orders: [...(orders || []), ...cart],
         pickUpDetails: route.params,
       },
       {
