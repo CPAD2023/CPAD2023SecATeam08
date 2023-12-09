@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 const PickUpScreen = () => {
-    const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const cart = useSelector((state) => state.cart.cart);
   const total = cart
     .map((item) => item.quantity * item.price)
@@ -13,6 +13,7 @@ const PickUpScreen = () => {
   const [selectedTime, setSelectedTime] = useState([]);
   const [delivery, setDelivery] = useState([]);
   const [address, setAddress] = useState("");
+  const [specialInstructions, setSpecialInstructions] = useState("");
   const deliveryTime = [
     {
       id: "0",
@@ -188,6 +189,19 @@ const PickUpScreen = () => {
             </Pressable>
           ))}
         </ScrollView>
+        <Text style={{ fontSize: 16, fontWeight: "500", marginHorizontal: 10 }}>
+          Special Instructions
+        </Text>
+        <TextInput
+          style={{
+            padding: 15,
+            borderColor: "gray",
+            borderWidth: 0.7,
+            borderRadius: 9,
+            margin: 10,
+          }}
+          onChangeText={(text) => setSpecialInstructions(text)}
+        />
       </SafeAreaView>
      {total === 0 ? null : (
         <Pressable
